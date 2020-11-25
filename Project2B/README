@@ -1,0 +1,76 @@
+NAME: Ian Conceicao
+EMAIL: IanCon234@gmail.com
+ID: 505153981
+
+--------------------
+    QUESTIONS
+-------------------
+
+QUESTION 2.3.1 - CPU time in the basic list implementation:
+----------------------------------------------------------
+        In the 1 and 2 thread mutex tests most of the CPU time is spent on the operations because for a large list like 1,000
+    the list operations take significantly more time than aquiring and giving up locks. The same is true for the 1 threaded
+    spin lock approach. However, for the 2 threaded spin lock approach, half the CPU time goes to the operations, and the
+    other half goes to waiting, as the thread waiting for the lock burns its cycles. The list opertions, insert, length,
+    and delete are the most expensive parts of the code because they do not have a O(1) time relative to the length of the list.
+    Instead, they are O(N), and each operation must be done N times, for each element, essentially making the list operations
+    O(N^2). 
+        For high threaded mutex trials, most of the time is still being spent on the list operations, because aquiring and giving up
+    locks is relatively cheap compared to the number of operations required for a large list. On the other hand, for high threaded spin-lock
+    trials, most of the time is spent burning cycles, waiting for locks, because the threads waiting are not blocked and put in a wait queue
+    like with a mutex. As a result 23 of the 24 threads are waiting, and the processor is burning many cycles.
+
+QUESTION 2.3.2 - Execution Profiling:
+------------------------------------
+    When the spin locks are run with a large number of threads, the lines: "while(__sync_lock_test_and_set(&spinLock, 1)){};" and
+    "while (__sync_lock_test_and_set(&spinLock, 1)){};" are taking up most of the CPU time. This line becomes so expensive when there 
+    are a large number of threads because each thread is wasting its cycles here, waiting for the one thread that holds the lock to
+    return it. The threads never yield, the process simply burns CPU time as each thread checks if the lock has been released.
+
+QUESTION 2.3.3 - Mutex Wait Time:
+--------------------------------
+        The average lock-wait time rises dramatically with the number of contending threads because more threads are waiting to grab the
+    lock to the critical section. The thread waiting is put into the back of a wait queue, and must wait for more threads to complete
+    the critical section.
+        Completion time rises less dramatically because in addition to measuring the time it takes to acquire a lock, it also
+    measures the time to complete the task. Less emphasis is placed onto the time a process spends waiting, which is the time 
+    that grows positively in correlation to the number of threads.
+        The wait time per operation can grow faster and higher than the actual time it takes to execute the critical section because
+    each thread must wait in the queue for each other thread to finish the critical section. If there are 9 threads, each thread will
+    have to wait on an average of 4 threads to finish before it can go, and the mean wait time will theoretically be 4 times the completion
+    time.
+
+QUESTION 2.3.4 - Performance of Partitioned Lists
+-------------------------------------------------
+        The graphs are very clear that the more lists there are, the higher the throughput. The increase in performance is due to the fine
+    granularity associated with a large number of locks. The more locks, the fewer conention.
+        With that said, after a certain point increasing the number of locks decreases throuput because contention is already so small,
+    that the overhead of creating and maintaing more locks, is more expensive than the neglible conention it prevents. At a certain granularity,
+    the lock blocks are so infrequent, that creating more locks has a marginal, if any, benefit.
+       The suggestion that the throughput of an N way partitioned list is equivalent to the throughput of a 1 way partitioned list with 1/N the times
+    of threads appears to be true looking at the curves. Specifically the 4 list and 8 list curve follow this pattern. 
+
+
+--------------------
+    FILES
+-------------------
+
+SortedList.h - a header file containing interfaces for linked list operations.
+SortedList.c -  implements insert, delete, lookup, and length methods for a sorted doubly linked list.
+lab2_list.c -  implements the specified command line options (--threads, --iterations, --yield, --sync, --lists)
+                 drives one or more parallel threads that do operations on a shared linked list, and reports on the final list and performance
+Makefile
+    default ... the lab2_list executable (compiling with the -Wall and -Wextra options).
+    tests ... run all specified test cases to generate CSV results
+    profile ... run tests with profiling tools to generate an execution profiling report
+    graphs ... use gnuplot to generate the required graphs
+    dist ... create the deliverable tarball
+    clean ... delete all programs and output generated by the Makefile
+lab2b_list.csv - contains all the results for all of test runs
+lab2b_1.png ... throughput vs. number of threads for mutex and spin-lock synchronized list operations.
+lab2b_2.png ... mean time per mutex wait and mean time per operation for mutex-synchronized list operations.
+lab2b_3.png ... successful iterations vs. threads for each synchronization method.
+lab2b_4.png ... throughput vs. number of threads for mutex synchronized partitioned lists.
+lab2b_5.png ... throughput vs. number of threads for spin-lock-synchronized partitioned lists.
+README, this file
+profile.out execution profile 

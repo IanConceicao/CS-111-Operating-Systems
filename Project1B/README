@@ -1,0 +1,55 @@
+NAME: Ian Conceicao
+EMAIL: IanCon234@gmail.com
+ID: 505153981
+
+To seperate but connect programs, lab1b-client and lab1b-server connect and work together. Lab1b-server must be run first,
+and it awaits a client to connect to it. The server allows the client to merely talk echo characters to it,
+or to run a shell with the --shell=<shellname> argument. Communication can also be compressed both ways between the client and server
+with the --compress argument.
+
+---------
+lab1b-server.c
+----------
+
+Usage: lab1b-server --port=<portNumber> --shell=<shellName> --compress
+
+portNumber can be any port greater than 1024. It is a required argument.
+shell will run a shell and feed the clients input into it and output the outputs of the shell
+to the client. 
+compress sets up the server to communicate in a compressed format, with the <zlib> library.
+
+-----------
+lab1b-client.c
+-------------
+Usage: lab1b-server --port=<portNumber> --log=<fileName> --compress
+
+portNumber must be the port of the server. It is a required argument.
+log is optional, and will write all the traffic of the client to a log. If the compressed tag is on it will output the
+compressed traffic.
+the compress tag is optional, it sets up the client to communicate in compressed language using <zlib>.
+If the server is compressed, the client must be, and the alternative is true.
+
+------------
+Usage:
+--------
+
+$ make
+
+Compiles both programs
+----------------
+$ make client
+
+Compiles the client
+----------------
+$ make server
+
+Compiles the server
+----------------
+$ make dist 
+
+Makes a tarbal
+--------------
+$ make clean 
+
+Cleans the state of folder, removes executables
+----------------------

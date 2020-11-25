@@ -1,0 +1,21 @@
+NAME: Ian Conceicao
+EMAIL: IanCon234@gmail.com
+ID: 505153981
+
+Usage: lab3b <fileSystemSummary.csv>
+
+lab3b.py: Script that reads a single file system summary in a csv format including:
+    -Block Consistency Audits
+    -I-node Allocation Audits
+    -Directory Consistency Audits
+
+Makefile:
+    default: make "executable" lab3b
+    dist: make tarball of all files
+    clean: clean directory
+
+lab3b.sh:
+    Runs the python script
+
+README:
+    this file

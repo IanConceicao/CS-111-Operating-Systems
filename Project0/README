@@ -1,0 +1,45 @@
+Ian Conceicao
+IanCon234@gmail.com
+505153981
+
+Contents & Description:
+_______________________
+
+    -------
+    lab0.c 
+    -------
+        lab0.c is the sole source file. It looks at standard input and outputs it to standard output.
+        If it is executed with the --input=<filename> and/or the --output=<other_filename> it will take 
+        input from filename and output to other_filename. Either can be called independently. It also has
+        a --segmentation argument which will cause a segmentation fault, and a --catch argument which will
+        catch the segmentation fault.
+    
+    -------
+    Makefile
+    -------
+        The makefile can build the project, by calling 'make'. It can be the distribution to turn in with
+        "make dist". It can also run a smoke test with "make check". The smoke test has the following tests:
+        
+        --------------
+        Smoke Test Cases
+        ---------------
+        stdToStdout, tests if the code exits with 0 from stdin to stdout
+        fileToFile, tests if both the input and output file have the same contents after running
+        goodExit, tests the same as above but making sure it has an exit code of 0
+        badArg, tests if a bad argument gives an exit code of 1
+        badInputFile, tests if an input file that does not exits gives an exit code of 2
+        badOutputFile, tests if an output file that is unreadable and writable gives an exit code of 3
+        catch, tests that catch returns an exit code of 4
+        segfault, tests that a segmentation fault gives an exit code of 134
+    
+    -------------
+    backtrace.png
+    -------------
+        Program was ran under gdb with --segmentation. The stack backtrace was examined.
+
+    -------------
+    breakpoint.png
+    -------------
+        Program was ran under gdb with --segmentation. A breakpoint was set at the bad assignment. The pointer
+        was confirmed to be of NULL.
+    

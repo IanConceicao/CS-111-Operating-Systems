@@ -1,0 +1,16 @@
+NAME: Ian Conceicao
+EMAIL: IanCon234@gmail.com
+ID: 505153981
+
+Usage:
+$ Make
+./lab1a
+or ./lab1a --shell
+The default run mode without the shell will echo characters back until interrupted or EOF.
+With the --shell argument you will be talking through the program to an interactive shell. Use ^C or ^D to end.
+
+lab1a.c is the source file
+Makefile is the makefile, includes default, clean, and dist arguments
+make dist will make a tar of the source file, makefile, and this readme.
+make clean with delete any compiled code and the tar
+make without any arguments will compile the program with -Wextra and -Wall options
